@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: shopping_postgres
+    environment:
+      POSTGRES_USER: shopping_user
+      POSTGRES_PASSWORD: shopping_pass
+      POSTGRES_DB: userdb
+#      TZ: Asia/Kolkata
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./docker-volume/postgres_data:/var/lib/postgresql/data
