@@ -1,5 +1,7 @@
 package com.shoppingapp.user.service.impl;
 
+import com.shoppingapp.common_lib.exception.BaseException;
+import com.shoppingapp.user.constants.ApplicationErrorCodes;
 import com.shoppingapp.user.dto.ChangePasswordRequest;
 import com.shoppingapp.user.dto.UpdateProfileRequest;
 import com.shoppingapp.user.dto.UserProfileResponse;
@@ -26,7 +28,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public UserProfileResponse getProfile(UUID userId) {
         AppUser appUser = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new BaseException(ApplicationErrorCodes.USER_NOT_FOUND));
 
         return new UserProfileResponse(
                 appUser.getId(),
@@ -41,7 +43,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public UserProfileResponse updateProfile(UUID userId, UpdateProfileRequest request) {
         AppUser appUser = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new BaseException(ApplicationErrorCodes.USER_NOT_FOUND));
 
 //        if (request.getPhone() != null)
             appUser.setPhone(request.getPhone());
@@ -61,10 +63,10 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void changePassword(UUID userId, ChangePasswordRequest request) {
         AppUser appUser = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new BaseException(ApplicationErrorCodes.USER_NOT_FOUND));
 
         if (!passwordEncoder.matches(request.getOldPassword(), appUser.getPassword())) {
-            throw new RuntimeException("Old password does not match");
+            throw new BaseException(ApplicationErrorCodes.INCORRECT_PASSWORD);
         }
 
         appUser.setPassword(passwordEncoder.encode(request.getNewPassword()));

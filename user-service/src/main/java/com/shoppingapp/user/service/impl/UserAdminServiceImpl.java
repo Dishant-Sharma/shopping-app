@@ -1,5 +1,7 @@
 package com.shoppingapp.user.service.impl;
 
+import com.shoppingapp.common_lib.exception.BaseException;
+import com.shoppingapp.user.constants.ApplicationErrorCodes;
 import com.shoppingapp.user.entity.AppUser;
 import com.shoppingapp.user.enums.Role;
 import com.shoppingapp.user.enums.Status;
@@ -30,14 +32,14 @@ public class UserAdminServiceImpl implements AdminService {
     @Override
     public AppUser getUserById(UUID id) {
         AppUser appUser = authRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->  new BaseException(ApplicationErrorCodes.USER_NOT_FOUND));
         return mapToDto(appUser);
     }
 
     @Override
     public AppUser updateUserRole(UUID id, String newRole) {
         AppUser appUser = authRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->  new BaseException(ApplicationErrorCodes.USER_NOT_FOUND));
         appUser.setRole(Role.valueOf(newRole));
         AppUser updated = authRepository.save(appUser);
         return mapToDto(updated);
@@ -46,7 +48,7 @@ public class UserAdminServiceImpl implements AdminService {
     @Override
     public void deleteUser(UUID id) {
         AppUser appUser = authRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->  new BaseException(ApplicationErrorCodes.USER_NOT_FOUND));
         appUser.setStatus(Status.DELETED); // soft delete
         authRepository.save(appUser);
     }

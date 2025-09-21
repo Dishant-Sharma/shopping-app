@@ -1,5 +1,7 @@
 package com.shoppingapp.user.service.impl;
 
+import com.shoppingapp.common_lib.exception.BaseException;
+import com.shoppingapp.user.constants.ApplicationErrorCodes;
 import com.shoppingapp.user.dto.LoginRequest;
 import com.shoppingapp.user.dto.LoginResponse;
 import com.shoppingapp.user.dto.RegistrationRequest;
@@ -33,10 +35,10 @@ public class AuthServiceImpl implements AuthService {
     public RegistrationResponse registerUser(RegistrationRequest request) {
         // check uniqueness of email/username
         if (authRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new BaseException(ApplicationErrorCodes.DUPLICATE_USER_EXIST, "Email already exists!");
         }
         if (authRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Username already exists");
+            throw new BaseException(ApplicationErrorCodes.DUPLICATE_USER_EXIST, "Username already exists!");
         }
 
         // hash password
@@ -69,11 +71,11 @@ public class AuthServiceImpl implements AuthService {
         // find user by username OR email
         AppUser appUser = authRepository.findByUsername(request.getUsernameOrEmail())
                 .or(() -> authRepository.findByEmail(request.getUsernameOrEmail()))
-                .orElseThrow(() -> new RuntimeException("Invalid username/email or password"));
+                .orElseThrow(() -> new BaseException(ApplicationErrorCodes.USER_NOT_FOUND, "Username/Email not found!"));
 
         // validate password
         if (!passwordEncoder.matches(request.getPassword(), appUser.getPassword())) {
-            throw new RuntimeException("Invalid username/email or password");
+            throw new RuntimeException( new BaseException(ApplicationErrorCodes.INVALID_CREDENTIALS));
         }
 
         return new LoginResponse("Login successful", appUser.getUsername(), appUser.getEmail());
