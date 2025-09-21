@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.shoppingapp</groupId>
 	<artifactId>common-lib</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>common-lib</name>
 	<description>common library for shopping app</description>
 	<url/>
