@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.shoppingapp</groupId>
 	<artifactId>common-lib</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>common-lib</name>
 	<description>common library for shopping app</description>
 	<url/>
@@ -65,6 +65,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<skip>
+						true
+					</skip>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
