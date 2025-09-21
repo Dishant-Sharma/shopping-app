@@ -1,4 +1,4 @@
-package com.shoppingapp.user_service.enums;
+package com.shoppingapp.user.enums;
 
 public enum Role {
     CUSTOMER,

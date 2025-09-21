@@ -1,9 +1,9 @@
-package com.shoppingapp.user_service.entity;
+package com.shoppingapp.user.entity;
 
-import com.shoppingapp.user_service.enums.Role;
-import com.shoppingapp.user_service.enums.Status;
+import com.shoppingapp.user.enums.Role;
+import com.shoppingapp.user.enums.Status;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,7 +18,10 @@ import java.util.UUID;
         }
 )
 @Data
-public class User {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // will generate UUID if using UUID type
