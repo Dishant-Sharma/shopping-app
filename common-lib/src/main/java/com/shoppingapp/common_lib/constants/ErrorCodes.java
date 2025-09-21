@@ -6,4 +6,6 @@ import org.springframework.http.HttpStatus;
 public class ErrorCodes {
     public static final ApiError UNKNOWN_ERROR = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR,
             "Internal Server Error", 1);
+    public static final ApiError VALIDATION_ERROR = new ApiError(HttpStatus.BAD_REQUEST,
+            "Bad Request", 1);
 }
