@@ -9,7 +9,7 @@ import java.util.Map;
 public class ErrorResponse {
     private final int errorCode;
     private final String message;
-    Map<String, String> fieldErrors;
+    private final Map<String, String> fieldErrors;
 
     public ErrorResponse(BaseException e) {
 //        this.errorCode = e.getApplicationErrorCode();
