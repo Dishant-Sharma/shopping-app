@@ -1,5 +1,6 @@
 package com.shoppingapp.user.configuration;
 
+import com.shoppingapp.common_lib.exception.GlobalExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,4 +12,5 @@ public class PasswordConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

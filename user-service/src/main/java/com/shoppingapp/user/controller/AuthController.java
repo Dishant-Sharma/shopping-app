@@ -3,6 +3,7 @@ package com.shoppingapp.user.controller;
 
 import com.shoppingapp.user.dto.*;
 import com.shoppingapp.user.service.AuthService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/v1/register")
-    public ResponseEntity<RegistrationResponse> register(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<RegistrationResponse> register(@Valid @RequestBody RegistrationRequest request) {
         log.info("Register API called for username={}, email={}", request.getUsername(), request.getEmail());
         RegistrationResponse response = authService.registerUser(request);
         log.debug("Registration completed for userId={}", response.getUsername());
@@ -31,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/v1/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         log.info("Login attempt for username/email={}", request.getUsernameOrEmail());
         LoginResponse response = authService.loginUser(request);
         log.info("Login success for userId={}", response.getUsername());
@@ -40,7 +41,7 @@ public class AuthController {
 
 
     @PostMapping("/v1/logout")
-    public ResponseEntity<Void> logout(@RequestBody LogoutRequest request) {
+    public ResponseEntity<Void> logout(@Valid @RequestBody LogoutRequest request) {
         log.info("Logout request received for userId={}", request.getUserId());
         authService.logoutUser(request.getUserId());
         log.info("Logout completed for userId={}", request.getUserId());
